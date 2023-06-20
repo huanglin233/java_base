@@ -8,7 +8,7 @@ package com.hl.javase.base.annotation.processor;
 @Factory(id = "Margherita", type = Meal.class)
 public class MargheritaPizza implements Meal {
 
-@Factory(id = "Margherita", type = Meal.class)
+	@Factory(id = "Margherita", type = Meal.class)
 	@Override
 	public float getPrice() {
 		return 6.0f;
