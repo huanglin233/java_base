@@ -14,7 +14,6 @@ public class AbstractQueuedSynchronizerTest {
 
         Thread1 t1 = new Thread1("t1", lock);
         Thread1 t2 = new Thread1("t2", lock);
-
         t1.start();
         t2.start();
     }

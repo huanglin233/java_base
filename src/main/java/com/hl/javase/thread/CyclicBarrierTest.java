@@ -17,6 +17,7 @@ public class CyclicBarrierTest {
             try{
                 Thread.sleep(2000);
                 cyclicBarrier.await();
+                System.out.println(Thread.currentThread().getName() + "离场");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -31,7 +32,7 @@ public class CyclicBarrierTest {
             }
         });
 
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < 4; i++) {
             new CyclicBarrierThread().start();
         }
 
