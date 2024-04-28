@@ -1,5 +1,11 @@
-package com.hl.javase.java8;/**
+package com.hl.javase.java8;
+
+/**
  * @author huanglin
  * @date 2024/03/08 10:24
- */public class IMyInterface {
+ */
+@FunctionalInterface
+public interface IMyInterface {
+
+    void print();
 }
