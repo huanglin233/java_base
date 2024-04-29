@@ -1,6 +1,7 @@
 package com.hl.algorithm.datastruct.linkedList;
 
 import lombok.Data;
+import lombok.val;
 
 /**
  * 链表节点
@@ -19,4 +20,8 @@ public class Node {
      * 指针域,指下一个节点
      */
     private Node next;
+
+    public Node(int val) {
+        this.val = val;
+    }
 }

@@ -21,4 +21,39 @@ public class DoMain {
 
         return l1;
     }
+
+    /**
+     * 反转链表 -- 递归
+     * @param head 头节点
+     * @return 反转后的头节点
+     */
+    public static Node reverseList1(Node head) {
+        if(head == null || head.getNext() == null) {
+            return null;
+        }
+
+        Node next = head.getNext();
+        Node node = reverseList1(next);
+        next.setNext(head);
+        head.setNext(null);
+
+        return node;
+    }
+
+    /**
+     * 反转列表 -- 头插法
+     * @param head 节点头
+     * @return
+     */
+    public static Node reverseList2(Node head) {
+        Node node = new Node(-1);
+        while(head != null) {
+            Node next = head.getNext();
+            head.setNext(node.getNext());
+            node.setNext(head);
+            head = next;
+        }
+
+        return node.getNext();
+    }
 }
