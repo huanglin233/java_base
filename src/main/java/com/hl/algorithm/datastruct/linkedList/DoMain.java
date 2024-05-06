@@ -56,4 +56,54 @@ public class DoMain {
 
         return node.getNext();
     }
+
+    /**
+     * 归并两个有序的链表
+     * @param node1 链表1的头节点
+     * @param node2 链表2的头节点
+     * @return 归并后的链表头节点
+     */
+    public static Node mergeTwoLists(Node node1, Node node2) {
+        if(node1 == null) {
+            return node2;
+        }
+
+        if(node2 == null) {
+            return node1;
+        }
+
+        if(node1.getVal() < node2.getVal()) {
+            node1.setNext(mergeTwoLists(node1.getNext(), node2));
+            return node1;
+        } else {
+            node2.setNext(mergeTwoLists(node1, node2.getNext()));
+            return node2;
+        }
+    }
+
+    /**
+     * 从有序表中删除重复的节点
+     * @param head 有序列表头节点
+     * @return
+     */
+    public static Node deleteDuplicateNode(Node head) {
+        if(head == null || head.getNext() == null) {
+            return head;
+        }
+
+        head.setNext(deleteDuplicateNode(head.getNext()));
+
+        return head.getVal() == head.getNext().getVal() ? head.getNext() : head;
+    }
+
+    /**
+     * 删除链表的倒数第n个节点
+     * @param head 链表头节点
+     * @param n    要删除的导出的n个节点
+     * @return
+     */
+    public static Node removeNthFromEnd(Node head, int n) {
+        return null;
+    }
+
 }
