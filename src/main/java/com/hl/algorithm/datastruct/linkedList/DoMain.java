@@ -100,10 +100,48 @@ public class DoMain {
      * 删除链表的倒数第n个节点
      * @param head 链表头节点
      * @param n    要删除的导出的n个节点
-     * @return
+     * @return 删除指定得节点后的链表头节点
      */
     public static Node removeNthFromEnd(Node head, int n) {
-        return null;
+        Node fast = head;
+        while(n-- > 0) {
+            fast = fast.getNext();
+        }
+        if(fast == null) {
+            assert head != null;
+            return head.getNext();
+        }
+        Node slow = head;
+        while(fast.getNext() != null) {
+            fast = fast.getNext();
+            slow = head.getNext();
+        }
+
+        slow.setNext(slow.getNext().getNext());
+
+        return head;
     }
+
+    /**
+     * 交换链表中相邻得节点
+     * @param head 链表头节点
+     * @return 交换后的链表头节点
+     */
+    public static Node swaPairs(Node head) {
+        Node node = new Node(-1);
+        node.setNext(head);
+        Node pre = node;
+        while(pre.getNext() != null && pre.getNext().getNext() != null) {
+            Node cur = pre.getNext(), next = cur.getNext();
+            Node nextNext = next.getNext();
+            pre.setNext(next);
+            next.setNext(cur);
+            cur.setNext(nextNext);
+            pre = next;
+        }
+
+        return pre.getNext();
+    }
+
 
 }
