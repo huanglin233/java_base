@@ -1,5 +1,7 @@
 package com.hl.algorithm.datastruct.linkedList;
 
+import java.util.Stack;
+
 /**
  * @author huanglin
  * @date 2024/04/28 23:27
@@ -132,7 +134,7 @@ public class DoMain {
         node.setNext(head);
         Node pre = node;
         while(pre.getNext() != null && pre.getNext().getNext() != null) {
-            Node cur = pre.getNext(), next = cur.getNext();
+            Node cur      = pre.getNext(), next = cur.getNext();
             Node nextNext = next.getNext();
             pre.setNext(next);
             next.setNext(cur);
@@ -143,5 +145,61 @@ public class DoMain {
         return pre.getNext();
     }
 
+    /**
+     * 两个链表求和
+     * @param n1 链表1
+     * @param n2 链表2
+     * @return
+     */
+    public Node addTowNumbers(Node n1, Node n2) {
+        Stack<Integer> stack1 = buildStack(n1);
+        Stack<Integer> stack2 = buildStack(n2);
+        Node           head   = new Node(-1);
+        int            carry  = 0;
+        while(!stack1.isEmpty() || !stack2.isEmpty() || carry != 0) {
+            int x   = stack1.isEmpty() ? 0 : stack1.pop();
+            int y   = stack2.isEmpty() ? 0 : stack2.pop();
+            int sum = x + y + carry;
 
+            Node node = new Node(sum % 10);
+            node.setNext(head.getNext());
+            head.setNext(node);
+            carry = sum / 10;
+        }
+
+        return head.getNext();
+    }
+
+    /**
+     * 把链表存入堆中 --后进先出
+     * @param node 链表头节点
+     * @return 堆
+     */
+    private Stack<Integer> buildStack(Node node) {
+        Stack<Integer> stack = new Stack<Integer>();
+        while(node != null) {
+            stack.push(node.getVal());
+            node = node.getNext();
+        }
+
+        return stack;
+    }
+
+    /**
+     * 判断一个链表是否为回文链表
+     * @param node 链表头节点
+     * @return 是否为回文链表
+     */
+    private boolean isPalindrome(Node node) {
+        return true;
+    }
+
+    /**
+     * 切割链表
+     * @param head
+     * @param cutNode
+     */
+    private void cut(Node head, Node cutNode) {
+
+    }
 }
