@@ -151,7 +151,7 @@ public class DoMain {
      * @param n2 链表2
      * @return
      */
-    public Node addTowNumbers(Node n1, Node n2) {
+    public static Node addTowNumbers(Node n1, Node n2) {
         Stack<Integer> stack1 = buildStack(n1);
         Stack<Integer> stack2 = buildStack(n2);
         Node           head   = new Node(-1);
@@ -175,7 +175,7 @@ public class DoMain {
      * @param node 链表头节点
      * @return 堆
      */
-    private Stack<Integer> buildStack(Node node) {
+    private static Stack<Integer> buildStack(Node node) {
         Stack<Integer> stack = new Stack<Integer>();
         while(node != null) {
             stack.push(node.getVal());
@@ -187,11 +187,26 @@ public class DoMain {
 
     /**
      * 判断一个链表是否为回文链表
-     * @param node 链表头节点
+     * @param head 链表头节点
      * @return 是否为回文链表
      */
-    private boolean isPalindrome(Node node) {
-        return true;
+    public static boolean isPalindrome(Node head) {
+        if(head == null || head.getNext() == null) {
+            return true;
+        }
+
+        Node slow = head, fast = head.getNext();
+        while(fast != null && fast.getNext() != null) {
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+        }
+
+        if(fast != null) {
+            slow = slow.getNext();
+        }
+
+        cut(head, slow);
+        return isEqual(head, reverseList2(slow));
     }
 
     /**
@@ -199,7 +214,31 @@ public class DoMain {
      * @param head
      * @param cutNode
      */
-    private void cut(Node head, Node cutNode) {
+    private static void cut(Node head, Node cutNode) {
+        while(head.getNext() != cutNode) {
+            head = head.getNext();
+        }
 
+        head.setNext(null);
+    }
+
+
+    /**
+     * 比较值
+     * @param n1 链表头节点1
+     * @param n2 链表头节点2
+     * @return boolean
+     */
+    private static boolean isEqual(Node n1, Node n2) {
+        while(n1 != null && n2 != null) {
+            if(n1.getVal() != n2.getVal()) {
+                return false;
+            }
+
+            n1 = n1.getNext();
+            n2 = n2.getNext();
+        }
+
+        return true;
     }
 }
