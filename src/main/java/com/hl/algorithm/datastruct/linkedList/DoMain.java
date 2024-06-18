@@ -210,6 +210,63 @@ public class DoMain {
     }
 
     /**
+     * 分割链表
+     * @param root 头节点
+     * @param k    切割份数
+     * @return
+     */
+    public static Node[] splitListToParts(Node root, int k) {
+        // 先计算链表的长度
+        int len = 0;
+        Node cur = root;
+        while (cur != null) {
+            len++;
+            cur = cur.getNext();
+        }
+
+        int    mod   = len % k;
+        int    size  = len / k;
+        Node[] nodes = new Node[k];
+        cur = root;
+        for(int i = 0; cur != null && i < k; i++) {
+            nodes[i] = cur;
+            int curSize = size + (mod-- > 0 ? 1 : 0);
+            for(int j = 0; j < curSize - 1; j++) {
+                cur = cur.getNext();
+            }
+            Node next = cur.getNext();
+            cur.setNext(null);
+            cur = next;
+        }
+
+        return nodes;
+    }
+
+    /**
+     * 链表元素按奇偶聚集
+     * @param head
+     * @return
+     */
+    public Node oddEvenList(Node head) {
+        if(head == null) {
+            return null;
+        }
+
+        Node odd      = head;
+        Node even     = head.getNext();
+        Node evenHead = even;
+        while(even != null && even.getNext() != null) {
+           odd.setNext(odd.getNext().getNext());
+           odd = odd.getNext();
+           even.setNext(even.getNext().getNext());
+           even = even.getNext();
+        }
+        odd.setNext(evenHead);
+
+        return head;
+    }
+
+    /**
      * 切割链表
      * @param head
      * @param cutNode
