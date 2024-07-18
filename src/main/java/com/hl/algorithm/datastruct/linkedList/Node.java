@@ -1,7 +1,6 @@
 package com.hl.algorithm.datastruct.linkedList;
 
 import lombok.Data;
-import lombok.val;
 
 /**
  * 链表节点
