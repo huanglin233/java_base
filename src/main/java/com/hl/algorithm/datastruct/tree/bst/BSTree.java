@@ -1,5 +1,7 @@
 package com.hl.algorithm.datastruct.tree.bst;
 
+import com.hl.algorithm.datastruct.linkedList.Node;
+
 /**
  * 二叉搜索树
  * @author huanglin
@@ -534,5 +536,69 @@ public class BSTree<T extends Comparable<T>> {
             return root;
         }
         return left != null ? left : right;
+     }
+
+     /**
+      * 从有序数组中构造二叉查找树
+      * @param nums 有序数组
+      * @return
+      */
+     public BSTNode<Integer> sortedArrayToBST(int[] nums) {
+        return toBSTByArray(nums, 0, nums.length - 1);
+     }
+
+     /**
+      * 构造二叉查找树
+      * @return
+      */
+     private BSTNode<Integer> toBSTByArray(int[] nums, int sIdx, int eIdx) {
+        if(sIdx > eIdx) {
+            return null;
+        }
+        int mIdx = (sIdx + eIdx) / 2;
+        BSTNode<Integer> root= new BSTNode<Integer>(nums[mIdx], null, null, null);
+        root.left = toBSTByArray(nums, sIdx, mIdx - 1);
+        root.right = toBSTByArray(nums, mIdx + 1, eIdx);
+
+        return root;
+     }
+
+     /**
+      * 根据有序链表构造平衡的二叉查找树
+      * @param head 链表头结点
+      * @return
+      */
+     public BSTNode<Integer> sortedListToBST(Node head) {
+        if(head == null) {
+            return null;
+        }
+
+        if(head.getNext() == null) {
+            return new BSTNode<Integer>(head.getVal(), null, null, null)
+        }
+        Node mid = findMid(head);
+        mid.setNext(null);
+        BSTNode<Integer> root = new BSTNode<Integer>(mid.getVal(), null, null, null);
+        root.left = sortedListToBST(head);
+        root.right = sortedListToBST(mid.getNext());
+
+        return root;
+     }
+
+     /**
+      * 找到链表的中间结点
+      * @param node 链表的头结点
+      * @return
+      */
+     private Node findMid(Node node) {
+        Node slow = node, fast = node.getNext();
+        Node mid  = node;
+        while(fast != null && fast.getNext() != null) {
+            mid  = slow;
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();;
+        }
+
+        return mid;
      }
   }
