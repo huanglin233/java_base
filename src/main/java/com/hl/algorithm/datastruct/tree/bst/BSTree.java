@@ -1,5 +1,8 @@
 package com.hl.algorithm.datastruct.tree.bst;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.hl.algorithm.datastruct.linkedList.Node;
 
 /**
@@ -600,5 +603,123 @@ public class BSTree<T extends Comparable<T>> {
         }
 
         return mid;
+     }
+
+     /**
+      * 在二叉查找树中寻找两个节点，使它们的和为一个给定值
+      * @param root 二叉树根结点
+      * @param k 给定值
+      * @return
+      */
+     public boolean findTarget(BSTNode<Integer> root, int k) {
+        List<Integer> nums = new ArrayList<Integer>();
+        inOrder(root, nums);
+        int i = 0, j = nums.size() - 1;
+        while(i < j) {
+            int sum = nums.get(i) + nums.get(j);
+            if(sum == k) {
+                return true;
+            }
+            if(sum < k) {
+                i++;
+            }
+            if(sum > k) {
+                j--;
+            }
+        }
+
+        return false;
+     }
+
+     /**
+      * 中序遍历树节点，并把节点值放入list中
+      * @param root 二叉树根结点
+      * @param list 存放节点值的list
+      */
+     private void inOrder(BSTNode<Integer> root, List<Integer> list) {
+        if(root == null) {
+            return;
+        }
+        inOrder(root.left, list);
+        list.add(root.key);
+        inOrder(root.right, list);
+     }
+
+     /**
+      * 二叉查找树中查找两个节点之差的最小绝对值
+      * @param root 二叉树根结点
+      * @return
+      */
+     public int getMinimumDifference(BSTNode<Integer> root) {
+        return getMinimumDifferenceByInOrder(root, Integer.MAX_VALUE, null);
+     }
+
+     /**
+      * 通过中序遍历二叉查找树中两个节点之差的最小绝对值
+      * @param root    树结点
+      * @param minDiff 当前的最小值
+      * @param preNode 前一个结点
+      * @return
+      */
+     private int getMinimumDifferenceByInOrder(BSTNode<Integer> node, int minDiff, BSTNode<Integer> preNode) {
+        if (node == null) {
+            return minDiff;
+        }
+        minDiff = getMinimumDifferenceByInOrder(node.left, minDiff, preNode);
+        if (preNode != null) {
+            minDiff = Math.min(minDiff, node.key - preNode.key);
+        }
+        preNode = node;
+        minDiff = getMinimumDifferenceByInOrder(node.right, minDiff, node);
+
+        return minDiff;
+     }
+
+     /**
+      * 二叉查找树中出现次数最多的值
+      * @param root 二叉树根结点
+      * @return
+      */
+     public List<T> findeMode(BSTNode<T> root) {
+        List<T> nums = new ArrayList<T>();
+        int maxCount = 0;
+        int curCount = 0;
+        BSTNode<T> preNode = null;
+        findeModeByInOrder(root, nums, maxCount, curCount, preNode);
+
+        return nums;
+     }
+
+     /**
+      * 二叉查找树中出现次数最多的值通过中序遍历查找
+      * @param node     结点
+      * @param nums     最多相同值得列表 -- 可能存在多个相关的值个数一样得值
+      * @param maxCount 最大相同值个数
+      * @param curCount 当前相同值个数
+      * @param preNode  前一个结点
+      */
+     private void findeModeByInOrder(BSTNode<T> node, List<T> nums, int maxCount, int curCount, BSTNode<T> preNode) {
+        if(node == null) {
+            return;
+        }
+
+        findeModeByInOrder(node.left, nums, maxCount, curCount, preNode);
+        if(preNode != null) {
+            if(preNode.key.equals(node.key)) {
+                curCount++;
+            } else {
+                curCount = 1;
+            }
+        }
+
+        if(curCount > maxCount) {
+            maxCount = curCount;
+            nums.clear();
+            nums.add(node.key);
+        } else if(curCount == maxCount) {
+            nums.add(node.key);
+        }
+        preNode = node;
+        findeModeByInOrder(node.right, nums, maxCount, curCount, preNode);
      }
   }
