@@ -1,9 +1,5 @@
 package com.hl.algorithm.datastruct.tree.avl;
 
-import com.hl.javase.test.A;
-
-import AVLNode;
-
 /**
  * @author huanglin
  * @date 2024/08/10 16:29

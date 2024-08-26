@@ -17,7 +17,7 @@ public class Huffman {
      */
     public Huffman(int a[]) {
         HuffmanNode parent = null;
-        MinHeap     heap   = new MinHeap(a);
+        MinHeap     heap   = new MinHeap(a); 
 
         for(int i = 0; i < a.length - 1; i++) {
             // 最小节点是左孩子

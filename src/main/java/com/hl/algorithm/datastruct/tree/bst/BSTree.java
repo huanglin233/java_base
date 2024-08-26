@@ -577,7 +577,7 @@ public class BSTree<T extends Comparable<T>> {
         }
 
         if(head.getNext() == null) {
-            return new BSTNode<Integer>(head.getVal(), null, null, null)
+            return new BSTNode<Integer>(head.getVal(), null, null, null);
         }
         Node mid = findMid(head);
         mid.setNext(null);
